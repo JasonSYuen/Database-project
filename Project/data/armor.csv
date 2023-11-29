@@ -1,0 +1,41 @@
+a_name,a_armorkey,a_monsterkey,a_vsfire,a_water,a_vsthunder,a_vsice,a_vsdragon,a_skill,a_defense
+Rathalos Helm Alpha,1,1,3,1,-2,1,-3,"attack boost 2, fire attack 1",54
+Rathalos Mail Alpha,2,1,3,1,-2,1,-3,weakness exploit 2 fire attack 1,54
+Rathalos Vambrace Alpha,3,1,3,1,-2,1,-3,fire resistance 2 attack boost 1,54
+Rathalos Coil Alpha,4,1,3,1,-2,1,-3,fire attack 2 focus 1,54
+Rathalos Greaves Alpha,5,1,3,1,-2,1,-3,jump master 1 weakness exploit 1,54
+Odogaron Helm Beta+,6,2,2,2,-2,-3,0,bleeding resistance 2 critical eye 1,140
+Odogaron Mail Beta+,7,2,2,2,-2,-3,0,speed sharpening 2,140
+Odogaron Vambraces Beta+,8,2,2,2,-2,-3,0,constitution 1 critical eye 1,140
+Odogaron Coil Beta+,9,2,2,2,-2,-3,0,critical eye 2,140
+Odogaron Greaves Beta+,10,2,2,2,-2,-3,0,quick sheath 1 critical eye 1,140
+Jagras Helm,11,3,-2,2,-1,-1,1,speed eating 1,8
+Jagras Mail,12,3,-2,2,-1,-1,1,intimidator 1,8
+Jagras Vambraces,13,3,-2,2,-1,-1,1,palico rally 1,8
+Jagras Coil,14,3,-2,2,-1,-1,1,fortify,8
+Jagras Greaves,15,3,-2,2,-1,-1,1,speed crawler,8
+Pukei Hood Alpha,16,4,0,3,-3,0,1,sporepuff expert 2,42
+Pukei Mail Alpha,17,4,0,3,-3,0,1,"item prolonger 1, botanist 1",42
+Pukei Vambraces Alpha,18,4,0,3,-3,0,1,"poison resistance 2, poison attack 1",42
+Pukei Coil Alpha,19,4,0,3,-3,0,1,poison attack 2,42
+Pukei Greaves Alpha,20,4,0,3,-3,0,1,"botanist 2, sporepuff expert 1",42
+Legiana Helm Alpha+,21,6,-1,2,-3,3,0,"divine blessing 2, ice attack 2",140
+Legiana Mail Alpha+,22,6,-1,2,-3,3,0,"evade window 2, divine blessing 2",140
+Legiana Vambraces Alpha+,23,6,-1,2,-3,3,0,"airborne 1, evade window 2",140
+Legiana Coil Alpha+,24,6,-1,2,-3,3,0,"ice attack 2, windproof 2",140
+Legiana Greaves Alpha+,25,6,-1,2,-3,3,0,"ice resistance 2, critical draw 1",140
+Nergigante Helm Alpha,26,7,1,1,-3,1,-3,"maximum might 2, attack boost 1",64
+Nergigante Mail Alpha,27,7,1,1,-3,1,-3,"stamina surge 2, agitator 1",64
+Nergigante Vambraces Alpha,28,7,1,1,-3,1,-3,"agitator 2, attack boost 1",64
+Nergigante Coil Alpha,29,7,1,1,-3,1,-3,"attack boost 2, stamina surge 1",64
+Nergigante Greaves Alpha,30,7,1,1,-3,1,-3,"maximum might, agitator 1",64
+Dodogama Helm Alpha +,31,5,0,0,-3,0,2,"blast resistance 2, bombardier 1",120
+Dodogama Mail Alpha +,32,5,0,0,-3,0,2,"blast attack 2, artillery 1",120
+Dodogama Vambraces Alpha +,33,5,0,0,-3,0,2,"bombardier 2, blast attack 1",120
+Dodogama Coil Alpha +,34,5,0,0,-3,0,2,"artillery 2, blast resistance 1",120
+Dodogama Greaves Alpha +,35,5,0,0,-3,0,2,"capacity boost 1, blast attack 1",120
+Golden Headdress Beta +,36,8,2,0,3,-5,2,weakness exploit 2,158
+Golden Haori Beta +,37,8,2,0,3,-5,2,resentment 2,158
+Golden Kote Beta +,38,8,2,0,3,-5,2,resentment 1,158
+Golden Obi Beta +,39,8,2,0,3,-5,2,weakness exploit 1,158
+Golden Hakama Beta +,40,8,2,0,3,-5,2,"resentment 2, attack boost 1",158
