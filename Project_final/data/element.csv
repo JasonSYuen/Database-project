@@ -1,0 +1,14 @@
+e_name,e_elementkey,e_desc,e_cure
+Fire,1,Monster: Fireblight depletes player health,roll 3 times or roll into water or use a nulberry
+Water,2,Monster: Waterblight slows down player stamina recovery,nulberry
+Thunder,3,Monster: Thunderblight makes it easier for players to be stunned,Roll 7 times or nulberry
+Ice,4,Monster: Iceblight increases stamina consumption,nulberry
+Dragon,5,Monster: Removes elemental or ailment damage,nulberry
+Poison,6,Both: Gradually depletes targets health,antidote or herbal medicine
+Stun,7,Both: Incapacitates target for short time,Getting hit or spamming inputs
+Paralysis,8,Both: Incapacitates target for short time,Getting hit or spamming inputs
+Sleep,9,Both: Incapacitates target for short time,Drink energy potion during the drowsy animation
+BlastBlight,10,Monster: Causes a delayed explosion on player.  Player: Damage buildup,Roll repeatedly
+Bleeding,11,Monster: player health depletes when dodging or attacking ,crouching or using Sushifish scale or using Astera Jerky
+Effluvial Buildup,12,Monster: lowers player maximum health,nulberry or leaving 
+none,13,n/a,n/a

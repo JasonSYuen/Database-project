@@ -1,0 +1,25 @@
+DROP TABLE armdrops;
+DROP TABLE armor;
+DROP TABLE biome;
+DROP TABLE drops;
+DROP TABLE element;
+DROP TABLE monbiome;
+DROP TABLE monele;
+DROP TABLE monpart;
+DROP TABLE monster;
+DROP TABLE part;
+DROP TABLE weadrops;
+DROP TABLE weapon;
+
+delete from armdrop;
+delete from armor;
+delete from biome;
+delete from drops;
+delete from element;
+delete from monbiome;
+delete from monele;
+delete from monpart;
+delete from monster;
+delete from part;
+delete from weadrop;
+delete from weapon;

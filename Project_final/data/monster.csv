@@ -1,0 +1,9 @@
+m_name,m_monsterkey,a_vsfire,a_vswater,a_vsthunder,a_vsice,a_vsdragon,m_smallestsize,m_largestsize,m_species
+Rathalos,1,Resistant,1 star,2 star,1 star,3 star,1500,2130,Flying Wyvern
+Odogaron,2,1 star,1 star,2 star,3 star,Resistant,542,1736,Fanged Wyvern
+Great Jagras,3,3 star,Resistant,2 star,2 star,None,277,1997,Fanged Wyvern
+Pukei Pukei,4,2 star,Resistant,3 star,2 star,None,970,1345,Bird Wyvern
+Dodogama,5,Resistant,2 star,3 star,2 star,1 star,978,2000,Fanged Wyvern
+Legiana,6,2 star,None,3 star,Resistant,None,1495,2125,Flying Wyvern
+Nergigante,7,Resistant,Resistant,3 star,Resistant,2 star,1626,2310,Elder Dragon
+Rajang,8,Resistant,1 star,Resistant,3 star ,Resistant,730,995,Fanged Beast
