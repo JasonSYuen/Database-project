@@ -1,6 +1,6 @@
 Create TABLE drops(
     d_name char(32) not null,
-    d_dropkey decimal(3,0) not null
+    d_dropkey decimal(3,0) not null --could do PRIMARY KEY instead of not null to make it a primary key constraint
 );
 
 Create TABLE monster(

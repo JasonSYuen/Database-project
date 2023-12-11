@@ -125,7 +125,7 @@ def closeConnection(_conn, _dbFile):
 def viewtables(_conn):
     print("which table would you like to view")
     
-    print(" monster : armor : biome : element : weapon")
+    print("monster  : armor  : biome  : element  : weapon")
     userchoice = ""
     userchoice = input()
 
@@ -235,9 +235,10 @@ def viewtables(_conn):
             
             if userchoice2 == "3":
                 print("what skill are you looking for")
+                print("make sure you type the name correctly or it will not print anything!")
                 userchoice5 = input()
                 sql = where(sql,str(possible_col2[0]),userchoice5)
-                print(sql)
+                #print(sql)
                 cur = _conn.cursor()
                 x = cur.execute(sql)
                 rows = cur.fetchall()
@@ -261,10 +262,13 @@ def viewtables(_conn):
 
             if userchoice2 == "2":
                 print("what biome's monsters are you looking for")
+                print("make sure you type the name correctly or it will not print anything!")
                 userchoice6 = input()
 
+                
                 sql = "select distinct(m_name) from biome join monbiome on b_biomekey = mb_biomekey join monster on m_monsterkey = mb_monsterkey where b_name like \"%" + userchoice6 +"%\";"
-                print(sql)
+                #print(sql)
+                
                 cur = _conn.cursor()
                 x = cur.execute(sql)
                 rows = cur.fetchall()
@@ -272,15 +276,12 @@ def viewtables(_conn):
                 for row in rows:
                     for r in row:
                         print(r)
-                
-            
 
+        
 
 
         elif userchoice == "element":
             print_element(rows)
-
-
 
 
         elif userchoice == "weapon":
@@ -308,6 +309,7 @@ def viewtables(_conn):
             print("3: look for specific weapon type")
             print("4: look for specific element")
             print("5: look for specific damage type")
+            print("make sure you type the name correctly or it will not print anything!")
             userchoice2 = input()
 
             if userchoice2 == "1":
@@ -358,140 +360,143 @@ def builds(_conn, build):
         print("4: find total defenses")
         print("5: back")
         
-        userchoice = int(input())
-        #adding to the build list
-        if userchoice == 1:
-            build.update({len(build)+1: sets()})
-            print("name the build")
-            n = str(input())
-            build[len(build)].name = n
-            
-            
-        if userchoice == 2:
-            #table of all the builds
-            for i in build:
-                print(build[i].name + ":")
-                header = "{:<35}{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}{:<25}"
-                print(header.format("name |", "vsFire |", "vsWater |", "vsThunder |", "vsIce |", "vsDragon |", "defense |", "skill"))
-                print("head: " + build[i].head)
-                print("chest: " + build[i].chest)
-                print("arm: " + build[i].arm)
-                print("waist: " + build[i].waist)
-                print("leg: " + build[i].leg + "\n")
-        
-        if userchoice == 3:
-            #first, search for armor piece
-            print("What armor do you wish to insert")
-            search = str(input())
-            selectPieces = """
-                SELECT a_name
-                FROM armor
-                WHERE a_name LIKE \"%""" + search + "%\""
-            rows = c.execute(selectPieces)
-            
-            #show search results
-            print("Select from the follow:")
-            searches = {}
-            counter = 1
-            for row in rows.fetchall():
-                header = "{:<5}{:<35}"
-                print(header.format(counter, row[0]))
-                header = "{:<35}"
-                name = header.format(row[0])
-                searches.update({counter: name})
-                counter = counter + 1;
-            
-            #take selection
-            search = int(input())
-            armor = searches[search]
-            selectPiece = """
-                SELECT *
-                FROM armor
-                WHERE a_name LIKE \"%""" + armor.strip() + "%\""
-            rows2 = c.execute(selectPiece)
-            
-            #converting armor piece into a string
-            piece = ""
-            for row in rows2.fetchall():
-                header = "{:<35}{:<12}{:<12}{:<12}{:<12}{:<12}{:<5}{:<25}"
-                piece = header.format(str(row[0]) + "|", str(row[3]) + "|", str(row[4]) + "|", str(row[5]) + "|", str(row[6]) + "|", str(row[7]) + "|", str(row[9]) + "|", str(row[8]))
-            
-            #placing armor in piece
-            print("What build do you want to put this armor")
-            counter = 1
-            for i in build:
-                print(str(counter) + ": " + build[i].name)
-                counter = counter + 1;
-            setChoice = int(input())
-            
-            #setting armor in the right slot
-            if piece.find("Helm") != -1 or piece.find("Hood") != -1 or piece.find("Headdress") != -1:
-                build[setChoice].head = piece
-            if piece.find("Mail") != -1 or piece.find("Haori") != -1:
-                build[setChoice].chest = piece
-            if piece.find("Vambrace") != -1 or piece.find("Kote") != -1:
-                build[setChoice].arm = piece
-            if piece.find("Coil") != -1 or piece.find("Obi") != -1:
-                build[setChoice].waist = piece
-            if piece.find("Greaves") != -1  or piece.find("Hakama") != -1:
-                build[setChoice].leg = piece
-            
-        if userchoice == 4:
-            print("Choose a build:")
-            counter = 1
-            for i in build:
-                print(str(counter) + ": " + build[i].name)
-                counter = counter + 1;
-            setChoice = int(input())
-        
-            #getting values
-            hvalues = build[setChoice].head.split("|")
-            cvalues = build[setChoice].chest.split("|")
-            avalues = build[setChoice].arm.split("|")
-            wvalues = build[setChoice].waist.split("|")
-            lvalues = build[setChoice].leg.split("|")
-            
-            #total defense
-            print("total defense")
-            defense = 0
-            defense = int(hvalues[6].strip()) + int(cvalues[6].strip()) + int(avalues[6].strip()) + int(wvalues[6].strip()) + int(lvalues[6].strip())
-            print(defense)
-            print()
-
-            #elements
-            print("vsFire")
-            fire = 0
-            fire = int(hvalues[1].strip()) + int(cvalues[1].strip()) + int(avalues[1].strip()) + int(wvalues[1].strip()) + int(lvalues[1].strip())
-            print(fire)
-            print()
-            
-            print("vsWater")
-            water = 0
-            water = int(hvalues[2].strip()) + int(cvalues[2].strip()) + int(avalues[2].strip()) + int(wvalues[2].strip()) + int(lvalues[2].strip())
-            print(water )
-            print()
-            
-            print("vsThunder")
-            thunder = 0
-            thunder = int(hvalues[3].strip()) + int(cvalues[3].strip()) + int(avalues[3].strip()) + int(wvalues[3].strip()) + int(lvalues[3].strip())
-            print(thunder )
-            print()
-            
-            print("vsIce")
-            ice = 0
-            ice = int(hvalues[4].strip()) + int(cvalues[4].strip()) + int(avalues[4].strip()) + int(wvalues[4].strip()) + int(lvalues[4].strip())
-            print(ice )
-            print()
-            
-            print("vsDragon")
-            dragon = 0
-            dragon = int(hvalues[5].strip()) + int(cvalues[5].strip()) + int(avalues[5].strip()) + int(wvalues[5].strip()) + int(lvalues[5].strip())
-            print(dragon )
-            print()
-            
+        try:
+            userchoice = int(input())
+            #adding to the build list
+            if userchoice == 1:
+                build.update({len(build)+1: sets()})
+                print("name the build")
+                n = str(input())
+                build[len(build)].name = n
                 
-        if userchoice == 5:
-            program =  False
+                
+            if userchoice == 2:
+                #table of all the builds
+                for i in build:
+                    print(build[i].name + ":")
+                    header = "{:<35}{:<12}{:<12}{:<12}{:<12}{:<12}{:<12}{:<25}"
+                    print(header.format("name |", "vsFire |", "vsWater |", "vsThunder |", "vsIce |", "vsDragon |", "defense |", "skill"))
+                    print("head: " + build[i].head)
+                    print("chest: " + build[i].chest)
+                    print("arm: " + build[i].arm)
+                    print("waist: " + build[i].waist)
+                    print("leg: " + build[i].leg + "\n")
+            
+            if userchoice == 3:
+                #first, search for armor piece
+                print("What armor do you wish to insert")
+                search = str(input())
+                selectPieces = """
+                    SELECT a_name
+                    FROM armor
+                    WHERE a_name LIKE \"%""" + search + "%\""
+                rows = c.execute(selectPieces)
+                
+                #show search results
+                print("Select from the follow:")
+                searches = {}
+                counter = 1
+                for row in rows.fetchall():
+                    header = "{:<5}{:<35}"
+                    print(header.format(counter, row[0]))
+                    header = "{:<35}"
+                    name = header.format(row[0])
+                    searches.update({counter: name})
+                    counter = counter + 1;
+                
+                #take selection
+                search = int(input())
+                armor = searches[search]
+                selectPiece = """
+                    SELECT *
+                    FROM armor
+                    WHERE a_name LIKE \"%""" + armor.strip() + "%\""
+                rows2 = c.execute(selectPiece)
+                
+                #converting armor piece into a string
+                piece = ""
+                for row in rows2.fetchall():
+                    header = "{:<35}{:<12}{:<12}{:<12}{:<12}{:<12}{:<5}{:<25}"
+                    piece = header.format(str(row[0]) + "|", str(row[3]) + "|", str(row[4]) + "|", str(row[5]) + "|", str(row[6]) + "|", str(row[7]) + "|", str(row[9]) + "|", str(row[8]))
+                
+                #placing armor in piece
+                print("What build do you want to put this armor")
+                counter = 1
+                for i in build:
+                    print(str(counter) + ": " + build[i].name)
+                    counter = counter + 1;
+                setChoice = int(input())
+                
+                #setting armor in the right slot
+                if piece.find("Helm") != -1 or piece.find("Hood") != -1 or piece.find("Headdress") != -1:
+                    build[setChoice].head = piece
+                if piece.find("Mail") != -1 or piece.find("Haori") != -1:
+                    build[setChoice].chest = piece
+                if piece.find("Vambrace") != -1 or piece.find("Kote") != -1:
+                    build[setChoice].arm = piece
+                if piece.find("Coil") != -1 or piece.find("Obi") != -1:
+                    build[setChoice].waist = piece
+                if piece.find("Greaves") != -1  or piece.find("Hakama") != -1:
+                    build[setChoice].leg = piece
+                
+            if userchoice == 4:
+                print("Choose a build:")
+                counter = 1
+                for i in build:
+                    print(str(counter) + ": " + build[i].name)
+                    counter = counter + 1;
+                setChoice = int(input())
+            
+                #getting values
+                hvalues = build[setChoice].head.split("|")
+                cvalues = build[setChoice].chest.split("|")
+                avalues = build[setChoice].arm.split("|")
+                wvalues = build[setChoice].waist.split("|")
+                lvalues = build[setChoice].leg.split("|")
+                
+                #total defense
+                print("total defense")
+                defense = 0
+                defense = int(hvalues[6].strip()) + int(cvalues[6].strip()) + int(avalues[6].strip()) + int(wvalues[6].strip()) + int(lvalues[6].strip())
+                print(defense)
+                print()
+
+                #elements
+                print("vsFire")
+                fire = 0
+                fire = int(hvalues[1].strip()) + int(cvalues[1].strip()) + int(avalues[1].strip()) + int(wvalues[1].strip()) + int(lvalues[1].strip())
+                print(fire)
+                print()
+                
+                print("vsWater")
+                water = 0
+                water = int(hvalues[2].strip()) + int(cvalues[2].strip()) + int(avalues[2].strip()) + int(wvalues[2].strip()) + int(lvalues[2].strip())
+                print(water )
+                print()
+                
+                print("vsThunder")
+                thunder = 0
+                thunder = int(hvalues[3].strip()) + int(cvalues[3].strip()) + int(avalues[3].strip()) + int(wvalues[3].strip()) + int(lvalues[3].strip())
+                print(thunder )
+                print()
+                
+                print("vsIce")
+                ice = 0
+                ice = int(hvalues[4].strip()) + int(cvalues[4].strip()) + int(avalues[4].strip()) + int(wvalues[4].strip()) + int(lvalues[4].strip())
+                print(ice )
+                print()
+                
+                print("vsDragon")
+                dragon = 0
+                dragon = int(hvalues[5].strip()) + int(cvalues[5].strip()) + int(avalues[5].strip()) + int(wvalues[5].strip()) + int(lvalues[5].strip())
+                print(dragon )
+                print()
+                
+                    
+            if userchoice == 5:
+                program =  False
+        except:
+            print("Please input a valid input")
 
 
 def update(_conn):
@@ -505,22 +510,23 @@ def update(_conn):
 
     if userchoice == "1":
         print ("enter the table, attribute, updated value,name coloumn, and name that you wish to update ie: monster m_smallestsize 1300 m_name Rathalos")
-        table1,attribute1,value,name_col,name1 = input().split()
-        sql = "update " + table1 + " set " + attribute1 + " = ? where " + name_col + " like \"%" + name1 + "%\""
-        print(sql)
-        print("updated")
-        #need code to execute it
-        cur = _conn.cursor()
-        x = cur.execute(sql,[(int(value))])
+        try:
+            table1,attribute1,value,name_col,name1 = input().split()
+            sql = "update " + table1 + " set " + attribute1 + " = ? where " + name_col + " like \"%" + name1 + "%\""
+            print(sql)
+        
+            cur = _conn.cursor()
+            x = cur.execute(sql,[(int(value))])
+            print("updated")
+        except:
+            print("update failed")
+            print("")
 
     if userchoice == "2":
         print("1: add monster")
         print("2: add armor")
         print("3: add weapon")
-        print("4: add part")
-        print("5: add biome")
-        print("6: add drop")
-        print("7: add element")
+
         
         userchoice2 = input()
 
@@ -529,121 +535,139 @@ def update(_conn):
 
             print("input name, primary key, vs_fire, vs_water, vs_thunder, vs_ice, vs_dragon,smallest size, largest size, species")
             print("ie: Nightshade Paolumu,9,2 star,3 star,1 star,1 star,Resistant,446,1429,Flying Wyvern ")
-            userchoice3 = input().split(",")
-            
+            try:
 
-            sql1 = "insert into monster Values(?,?,?,?,?,?,?,?,?,?)"
-            print(sql1)
-
-            y = userchoice3[0],int(userchoice3[1]),userchoice3[2],userchoice3[3],userchoice3[4],userchoice3[5],userchoice3[6],int(userchoice3[7]),int(userchoice3[8]),userchoice3[9]
-            cur = _conn.cursor()
-            x = cur.execute(sql1,y)
-
-
-            print("what biomes is this monster in (enter b_biomekeys seperated by commas)")
-            userchoice3 = input().split(",")
-            for x in userchoice3:
-                print(x)
-                sql2 = "insert into monbiome values(?,?)"
-                print(sql2)
-
-                #need code to execute
-                y = int(primary_key),int(x)
-                cur = _conn.cursor()
-                x = cur.execute(sql2,y)
-
-
-
-            print("what elements is this monster (enter e_elementkeys seperated by commas)")
-            userchoice3 = input().split(",")
-            for x in userchoice3:
-                sql2 = "insert into monele values(?,?)"
-                print(sql2)
-                #need code to execute
-                cur = _conn.cursor()
-                y = int(primary_key),int(x)
-                x = cur.execute(sql2,y)
-
-
-            print("how many parts can be interacted with on this monster")
-            userchoice3 = input()
-            for i in range (0,int(userchoice3)):
-                print("enter 1 breakable part and what is the part weak to.(enter p_partkey, mp_slicing, mp_blunt, mp_ammo, mp_carvable)")
-                print("ie: 1,3 star,3 star,3 star,FALSE")
-                userchoice4 = input().split(",")
-                sql2 = "insert into monpart values (?,?,?,?,?,?)"
+                userchoice3 = input().split(",")
                 
-                print(sql2)
-                # need code to execute
+
+                sql1 = "insert into monster Values(?,?,?,?,?,?,?,?,?,?)"
+                print(sql1)
+
+                y = userchoice3[0],int(userchoice3[1]),userchoice3[2],userchoice3[3],userchoice3[4],userchoice3[5],userchoice3[6],int(userchoice3[7]),int(userchoice3[8]),userchoice3[9]
                 cur = _conn.cursor()
-                y = int(primary_key),int(userchoice4[0]),userchoice4[1],userchoice4[2],userchoice4[3],userchoice4[4]
-                x = cur.execute(sql2,y)
+                x = cur.execute(sql1,y)
+
+
+                print("what biomes is this monster in (enter b_biomekeys seperated by commas)")
+                userchoice3 = input().split(",")
+                for x in userchoice3:
+                    print(x)
+                    sql2 = "insert into monbiome values(?,?)"
+                    print(sql2)
+
+                    #need code to execute
+                    y = int(primary_key),int(x)
+                    cur = _conn.cursor()
+                    x = cur.execute(sql2,y)
+
+
+
+                print("what elements is this monster (enter e_elementkeys seperated by commas)")
+                userchoice3 = input().split(",")
+                for x in userchoice3:
+                    sql2 = "insert into monele values(?,?)"
+                    print(sql2)
+                    #need code to execute
+                    cur = _conn.cursor()
+                    y = int(primary_key),int(x)
+                    x = cur.execute(sql2,y)
+
+
+                print("how many parts can be interacted with on this monster")
+                userchoice3 = input()
+                for i in range (0,int(userchoice3)):
+                    print("enter 1 breakable part and what is the part weak to.(enter p_partkey, mp_slicing, mp_blunt, mp_ammo, mp_carvable)")
+                    print("ie: 1,3 star,3 star,3 star,FALSE")
+                    userchoice4 = input().split(",")
+                    sql2 = "insert into monpart values (?,?,?,?,?,?)"
+                    
+                    
+                    # need code to execute
+                    cur = _conn.cursor()
+                    y = int(primary_key),int(userchoice4[0]),userchoice4[1],userchoice4[2],userchoice4[3],userchoice4[4]
+                    x = cur.execute(sql2,y)
+            except:
+                print("insert failed")
+                print("")
         
         if userchoice2 == "2":
             primary_key = primarykey(_conn,"armor")
 
             print("input name,primary key, monster key, a_vsfire, a_vswater, a_vsthunder, a_vsuce, a_vsdragon, a_skill, a_defense ")
             print("ie: Jagras Helm Alpha,41,3,1,1,1,1,1,speed eater 2,50")
-            userchoice3 = input().split(",")
 
-            sql1 = "insert into armor Values(?,?,?,?,?,?,?,?,?,?)"
-            #print(sql1)
-
-            y = userchoice3[0],int(userchoice3[1]),int(userchoice3[2]),int(userchoice3[3]),int(userchoice3[4]),int(userchoice3[5]),int(userchoice3[6]),int(userchoice3[7]),userchoice3[8],int(userchoice3[9])
-            cur = _conn.cursor()
-            x = cur.execute(sql1,y)
-
-
-            print("how many different drops are needed to make this armor piece")
-            userchoice3 = input()
-            for i in range (0,int(userchoice3)):
-                print("what drops are needed to make this armor piece (enter d_dropkey,ad_quantity seperated by commas)")
+            try:
                 userchoice3 = input().split(",")
-                
-                sql2 = "insert into armdrop values(?,?,?)"
-                print(sql2)
 
-                y = int(primary_key),int(userchoice3[0]),int(userchoice3[1]),
+                sql1 = "insert into armor Values(?,?,?,?,?,?,?,?,?,?)"
+                #print(sql1)
+
+                y = userchoice3[0],int(userchoice3[1]),int(userchoice3[2]),int(userchoice3[3]),int(userchoice3[4]),int(userchoice3[5]),int(userchoice3[6]),int(userchoice3[7]),userchoice3[8],int(userchoice3[9])
                 cur = _conn.cursor()
-                x = cur.execute(sql2,y)
+                x = cur.execute(sql1,y)
+
+
+                print("how many different drops are needed to make this armor piece")
+                userchoice3 = input()
+                for i in range (0,int(userchoice3)):
+                    print("what drops are needed to make this armor piece (enter d_dropkey,ad_quantity seperated by commas)")
+                    userchoice3 = input().split(",")
+                    
+                    sql2 = "insert into armdrop values(?,?,?)"
+                    
+
+                    y = int(primary_key),int(userchoice3[0]),int(userchoice3[1]),
+                    cur = _conn.cursor()
+                    x = cur.execute(sql2,y)
+            except:
+                print("insert failed")
+                print("")
 
         if userchoice2 == "3":
             primary_key = primarykey(_conn,"weapon")
             print("input name,primary key, weapon type,element key, rarity, damage type, attack, elemental attack,affinity,monsterkey ")
             print("ie: Jagras Gunlance,16,Gunlance,9,1,slicing,100,0,.15,3")
-            userchoice3 = input().split(",")
+            try:
+                userchoice3 = input().split(",")
 
-            sql1 = "insert into weapon Values(?,?,?,?,?,?,?,?,?,?)"
-            #print(sql1)
+                sql1 = "insert into weapon Values(?,?,?,?,?,?,?,?,?,?)"
+                #print(sql1)
 
-            y = userchoice3[0],int(userchoice3[1]),userchoice3[2],int(userchoice3[3]),int(userchoice3[4]),userchoice3[5],int(userchoice3[6]),int(userchoice3[7]),float(userchoice3[8]),userchoice3[9]
-            cur = _conn.cursor()
-            x = cur.execute(sql1,y)
-
-
-            print("how many different drops are needed to make this weapon ")
-            userchoice3 = input()
-            for i in range (0,int(userchoice3)):
-                print("what drops are needed to make this weapon piece (enter d_dropkey,wd_quantity seperated by commas)")
-                userchoice4 = input().split(",")
-                
-                sql2 = "insert into weadrop values(?,?,?)"
-                print(sql2)
-
-                y = int(primary_key),int(userchoice4[0]),int(userchoice4[1]),
+                y = userchoice3[0],int(userchoice3[1]),userchoice3[2],int(userchoice3[3]),int(userchoice3[4]),userchoice3[5],int(userchoice3[6]),int(userchoice3[7]),float(userchoice3[8]),userchoice3[9]
                 cur = _conn.cursor()
-                x = cur.execute(sql2,y)
+                x = cur.execute(sql1,y)
+
+
+                print("how many different drops are needed to make this weapon ")
+                userchoice3 = input()
+                for i in range (0,int(userchoice3)):
+                    print("what drops are needed to make this weapon piece (enter d_dropkey,wd_quantity seperated by commas)")
+                    userchoice4 = input().split(",")
+                    
+                    sql2 = "insert into weadrop values(?,?,?)"
+                    
+
+                    y = int(primary_key),int(userchoice4[0]),int(userchoice4[1]),
+                    cur = _conn.cursor()
+                    x = cur.execute(sql2,y)
+            except:
+                print("insert failed")
+                print("")
 
     if userchoice == "3":
 
         print ("enter the table, attribute, and name that you wish to delete ie: monster, m_name, Nightshade Paolumu")
-        userchoice2 = input().split(",")
-        sql = "delete from ? where ? like ?"
-        print(sql)
-        #need code to execute it
-        cur = _conn.cursor()
-        x = cur.execute(sql,userchoice2[0],userchoice2[1],userchoice2[2])
-        print("deleted")
+        try: 
+            userchoice2 = input().split(",")
+            sql = "delete from ? where ? like ?"
+            
+            #need code to execute it
+            cur = _conn.cursor()
+            x = cur.execute(sql,userchoice2[0],userchoice2[1],userchoice2[2])
+            print("deleted")
+        except:
+            print("delete failed")
+            print("")
 
 
 def primarykey(_conn,table):
@@ -732,29 +756,30 @@ def main():
 
 
 
+            try:
+                userchoice = int(input())
+                if userchoice == 1:
+                    print("ending program")
+                    endprogram = True
 
-            userchoice = int(input())
-            if userchoice == 1:
-                print("ending program")
-                endprogram = True
+                if userchoice == 2:
+                    viewtables(conn)
 
-            if userchoice == 2:
-                viewtables(conn)
+                if userchoice == 3:
+                    builds(conn,build)
 
-            if userchoice == 3:
-                builds(conn,build)
-
-            if userchoice == 4:
-                wishlist(conn,build)
-            if userchoice == 5:
-                print("developer password")
-                userchoice0 = input()
-                if userchoice0 == "password":
-                    update(conn)
-                
-                else:
-                    print("incorrect password")
-
+                if userchoice == 4:
+                    wishlist(conn,build)
+                if userchoice == 5:
+                    print("developer password ... hint: password")
+                    userchoice0 = input()
+                    if userchoice0 == "password":
+                        update(conn)
+                    
+                    else:
+                        print("incorrect password")
+            except:
+                print("Please use a valid input")
 
 
             #view tables:
